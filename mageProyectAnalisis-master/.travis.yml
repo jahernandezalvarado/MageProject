@@ -1,0 +1,18 @@
+# faster builds
+git:
+  depth: 3
+  submodules: false
+sudo: false
+dist: focal
+language: java
+jdk:
+  - openjdk11
+#  - openjdk-ea
+#matrix:
+#  allow_failures:
+#    - jdk: openjdk-ea
+before_install:
+  - echo "MAVEN_OPTS='-Xmx2g'" > ~/.mavenrc
+cache:
+  directories:
+    - $HOME/.m2

@@ -1,0 +1,50 @@
+
+
+package mage.cards.h;
+
+import mage.abilities.common.BeginningOfUpkeepTriggeredAbility;
+import mage.abilities.dynamicvalue.DynamicValue;
+import mage.abilities.dynamicvalue.common.PermanentsOnBattlefieldCount;
+import mage.abilities.effects.common.DrawCardSourceControllerEffect;
+import mage.abilities.hint.Hint;
+import mage.abilities.hint.ValueHint;
+import mage.cards.CardImpl;
+import mage.cards.CardSetInfo;
+import mage.constants.CardType;
+import mage.constants.SubType;
+import mage.constants.SuperType;
+import mage.constants.TargetController;
+import mage.filter.common.FilterControlledPermanent;
+
+import java.util.UUID;
+
+/**
+ * @author Loki
+ */
+public final class HondenOfSeeingWinds extends CardImpl {
+
+    private static final DynamicValue xValue = new PermanentsOnBattlefieldCount(
+            new FilterControlledPermanent(SubType.SHRINE)
+    );
+    private static final Hint hint = new ValueHint("Shrines you control", xValue);
+
+    public HondenOfSeeingWinds(UUID ownerId, CardSetInfo setInfo) {
+        super(ownerId,setInfo,new CardType[]{CardType.ENCHANTMENT},"{4}{U}");
+        addSuperType(SuperType.LEGENDARY);
+        this.subtype.add(SubType.SHRINE);
+
+
+        // At the beginning of your upkeep, draw a card for each Shrine you control.
+        this.addAbility(new BeginningOfUpkeepTriggeredAbility(new DrawCardSourceControllerEffect(xValue), TargetController.YOU, false).addHint(hint));
+    }
+
+    private HondenOfSeeingWinds(final HondenOfSeeingWinds card) {
+        super(card);
+    }
+
+    @Override
+    public HondenOfSeeingWinds copy() {
+        return new HondenOfSeeingWinds(this);
+    }
+
+}
